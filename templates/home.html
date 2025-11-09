@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🍉Fruit Detector – Choose Mode</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("{{ url_for('static', filename='background/home.jpg') }}") no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Times New Roman', Times, serif;
+      overflow-x: hidden;
+    }
+
+.container {
+  text-align: center;
+  background: transparent; /* completely see-through */
+  padding: 0;              /* remove box spacing */
+  border: none;            /* no border */
+  box-shadow: none;        /* no shadow */
+}
+
+    h1 {
+      font-size: 42px;
+      color: #ff1493;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px rgba(255, 106, 0, 0.5);
+    }
+
+    .btn {
+      display: block;
+      width: 260px;
+      margin: 20px auto;
+      padding: 18px;
+      font-size: 22px;
+      color: white;
+      background: linear-gradient(45deg, #ff7f50, #ff1493);
+      border: 2px solid #ff69b4;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .btn:hover {
+      transform: scale(1.07);
+      background: linear-gradient(45deg, #ff1493, #ff7f50);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍎Choose Detection Mode🍑</h1>
+
+    <a href="/upload_mode" class="btn"><b>📁 Upload Fruit Image</b></a>
+    <a href="/webcam" class="btn"><b>🎥 Detect Using Webcam</b></a>
+  </div>
+</body>
+</html>

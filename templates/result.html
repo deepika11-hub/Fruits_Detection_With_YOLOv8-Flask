@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🍇 Detection Result 🍓</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Times New Roman', Times, serif;
+      color: #222;
+      background: url("{{ url_for('static', filename='background/fruits.jpeg') }}") no-repeat center center fixed;
+      background-size: cover;
+      height: 90vh;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding-left: 12%;
+      padding-top: 0.5%;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: 25px;
+      border: 3px solid rgba(255, 102, 153, 0.7);
+      backdrop-filter: blur(6px);
+      padding: 40px 60px;
+      text-align: center;
+      max-width: 620px;
+      box-shadow: 0 0 25px rgba(255, 182, 193, 0.4);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .container:hover {
+      box-shadow: 0 0 35px rgba(255, 105, 180, 0.6);
+    }
+
+    h1 {
+      font-size: 42px;
+      color: #ff1493;
+      margin-bottom: 25px;
+      text-shadow: 0 0 12px rgba(255, 102, 0, 0.7);
+    }
+
+    img {
+      width: 420px;
+      margin-top: 15px;
+      border-radius: 20px;
+      border: 3px solid #00bc64;
+      box-shadow: 0 0 25px rgba(2, 195, 98, 0.8);
+      transition: all 0.4s ease-in-out;
+    }
+
+    img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 35px rgba(0, 255, 120, 1);
+    }
+
+    h2 {
+      margin-top: 30px;
+      font-size: 28px;
+      color: #00b40c;
+      text-shadow: 0 0 8px rgba(0, 200, 100, 0.4);
+    }
+
+    p {
+      font-size: 22px;
+      font-weight: bold;
+      color: #050505;
+      margin: 10px 0;
+      letter-spacing: 1px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 35px;
+      padding: 12px 35px;
+      font-size: 20px;
+      font-family: 'Times New Roman', Times, serif;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(45deg, #ff7f50, #ff1493);
+      text-decoration: none;
+      border-radius: 12px;
+      border: 2px solid #ff69b4;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease-in-out;
+    }
+
+    a:hover {
+      transform: scale(1.08);
+      background: linear-gradient(45deg, #ff1493, #ff7f50);
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+      }
+      .container {
+        width: 90%;
+        padding: 25px;
+      }
+      img {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Detection Result🍇</h1>
+
+    <img src="{{ image_file }}" alt="Detected Image">
+
+    <h2><b>🍑Detected Fruit</b></h2>
+    {% if fruits %}
+      {% for fruit in fruits %}
+        <p>{{ fruit }}</p>
+      {% endfor %}
+    {% else %}
+      <p><b>No fruits detected😢</b></p>
+    {% endif %}
+
+    <a href="/"><b>🔙 Return to Home🥰</b></a>
+  </div>
+</body>
+</html>

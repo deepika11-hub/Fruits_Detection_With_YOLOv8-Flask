@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🍎Fruits Detection🍉</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Times New Roman', Times, serif;
+      color: #222;
+      background: url("{{ url_for('static', filename='background/fruits.jpeg') }}") no-repeat center center fixed;
+      background-size: cover;
+
+      /* Align slightly left but still vertically centered */
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      padding-left: 8%;
+    }
+
+    .container {
+      padding: 40px 60px;
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.25);
+      border: 3px solid rgba(255, 102, 153, 0.7); /* 🍓 border around container */
+      backdrop-filter: blur(6px);
+      max-width: 600px;
+      width: 90%;
+      text-align: center; /* Center all inside content */
+    }
+
+    h1 {
+      font-size: 42px;
+      color: #001fa1;
+      text-shadow: 0 0 10px rgba(255, 0, 128, 0.6);
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: inline-block;
+      margin-top: 15px;
+      font-family: 'Times New Roman', Times, serif;
+      padding: 12px 30px;
+      background: linear-gradient(45deg, #f97579, #fcb4a0);
+      border-radius: 12px;
+      color: #292828;
+      font-size: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      border: 2px solid #ff7a7a; /* 🍑 border for the label box */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    label:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #fcb4a0, #f97579);
+    }
+
+    input[type=file] {
+      display: none;
+    }
+
+    #fileName {
+      margin-top: 12px;
+      font-size: 18px;
+      color: #333;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 14px 40px;
+      font-size: 20px;
+      font-family: 'Times New Roman', Times, serif;
+      border-radius: 12px;
+      border: 2px solid #03e65e; /* 🥝 border for button */
+      background: linear-gradient(45deg, #03e65e, #5ffaff);
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+
+    button:hover {
+      transform: scale(1.07);
+      background: linear-gradient(45deg, #00d4ff, #03e65e);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🍎I'm Fruit Detector with YOLOv8🍌</h1>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <label for="fileInput">🍏Give Me Fruit</label>
+      <input id="fileInput" type="file" name="file" accept=".jpg, .jpeg, .png" onchange="updateFileName(this)">
+      
+      <div id="fileName"><b>Not Given Yet🍉🥲</b></div>
+      
+      <button type="submit"><b>Click Me for Result🍍</b></button>
+    </form>
+  </div>
+
+  <script>
+    function updateFileName(input) {
+      const fileName = input.files.length > 0 
+        ? "🍍Given😍: " + input.files[0].name 
+        : "🍉Not Given Yet";
+      document.getElementById("fileName").textContent = fileName;
+    }
+  </script>
+</body>
+</html>
