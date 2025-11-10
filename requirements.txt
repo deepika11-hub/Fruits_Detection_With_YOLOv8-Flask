@@ -1,14 +1,9 @@
-# === Web Framework ===
 Flask==3.0.3
-gunicorn==22.0.0
-
-# === Machine Learning / YOLOv8 ===
 ultralytics==8.3.16
+opencv-python-headless==4.10.0.84
 torch==2.2.2
 torchvision==0.17.2
-
-# === Utilities ===
-opencv-python-headless==4.10.0.84
 numpy==1.26.4
 Pillow==10.4.0
+gunicorn==22.0.0
 gdown==5.2.0
