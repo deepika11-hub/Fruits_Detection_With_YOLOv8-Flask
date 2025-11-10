@@ -1,15 +1,14 @@
-from flask import Flask, render_template, request, url_for, Response
+from flask import Flask, render_template, request, url_for
 import os
 from ultralytics import YOLO
 from pathlib import Path
-import cv2
 
 # ======================================================
 # 🔧 Flask App Setup
 # ======================================================
 app = Flask(__name__)
 
-# Static folder paths
+# Folder paths
 UPLOAD_FOLDER = 'static/uploads'
 RESULT_FOLDER = 'static/results'
 
@@ -20,52 +19,21 @@ os.makedirs(RESULT_FOLDER, exist_ok=True)
 model = YOLO("best.pt")
 
 # ======================================================
-# 🏠 HOME PAGE — Choose Mode
+# 🏠 HOME PAGE — Choose Detection Mode
 # ======================================================
 @app.route('/')
 def home():
     return render_template('home.html')
 
 # ======================================================
-# 📁 IMAGE UPLOAD MODE PAGE
+# 📁 IMAGE UPLOAD PAGE
 # ======================================================
 @app.route('/upload_mode')
 def upload_mode():
     return render_template('index.html')
 
 # ======================================================
-# 🎥 WEBCAM PAGE
-# ======================================================
-@app.route('/webcam')
-def webcam():
-    return render_template('webcam.html')
-
-
-# ======================================================
-# 🔴 LIVE VIDEO STREAM (Webcam Detection)
-# ======================================================
-def generate_frames():
-    cap = cv2.VideoCapture(0)
-    while True:
-        success, frame = cap.read()
-        if not success:
-            break
-        else:
-            # Run YOLOv8 model on webcam frame
-            results = model.predict(source=frame, conf=0.5, stream=True)
-            for r in results:
-                annotated_frame = r.plot()  # Draw bounding boxes
-                _, buffer = cv2.imencode('.jpg', annotated_frame)
-                frame_bytes = buffer.tobytes()
-                yield (b'--frame\r\n'
-                       b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
-
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-# ======================================================
-# 🍎 IMAGE UPLOAD DETECTION (Your Existing Working Logic)
+# 🍎 IMAGE UPLOAD DETECTION
 # ======================================================
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -79,7 +47,7 @@ def upload():
     upload_path = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(upload_path)
 
-    # Run YOLOv8 and save results to static/results
+    # Run YOLOv8 model
     results = model.predict(
         source=upload_path,
         conf=0.5,
@@ -89,7 +57,7 @@ def upload():
         exist_ok=True
     )
 
-    # Find result image path
+    # Get result image path
     result_path = Path("static/results") / os.path.basename(file.filename)
     if not result_path.exists():
         detected_files = list(Path("static/results").glob("*.jpg")) + list(Path("static/results").glob("*.png"))
@@ -100,7 +68,7 @@ def upload():
 
     result_image_url = url_for('static', filename=f"results/{result_path.name}")
 
-    # Extract detected fruit names
+    # Extract detected fruits
     fruit_names = []
     for r in results:
         for c in r.boxes.cls:
@@ -119,6 +87,7 @@ def upload():
 
     fruit_display = [f"{emojis.get(f, '🍏')} {f}" for f in fruit_names]
 
+    # Render result page
     return render_template('result.html', image_file=result_image_url, fruits=fruit_display)
 
 # ======================================================

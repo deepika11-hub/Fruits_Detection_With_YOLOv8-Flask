@@ -1,7 +1,7 @@
-flask
-ultralytics
-torch
-opencv-python
-werkzeug
+Flask==3.0.3
+ultralytics==8.3.16
+opencv-python-headless==4.10.0.84
+torch>=2.0.0
+numpy>=1.24.0
+Pillow
 gunicorn
-numpy
