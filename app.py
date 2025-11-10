@@ -16,7 +16,16 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
 
 # Load YOLOv8 model
+import gdown, os
+
+if not os.path.exists("best.pt"):
+    file_id = "1IsF2SazGDWZjgwyAlBfKN2RBjug4aLeL"
+    url = f"https://drive.google.com/uc?id={file_id}"
+    gdown.download(url, "best.pt", quiet=False)
+
+from ultralytics import YOLO
 model = YOLO("best.pt")
+model.fuse = lambda *a, **k: model  # disable fusion to prevent OOM
 
 # ======================================================
 # 🏠 HOME PAGE — Choose Detection Mode
